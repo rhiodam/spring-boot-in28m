@@ -1,13 +1,12 @@
 package com.rhiodamuthie.springbootin28m.service;
 
+import com.rhiodamuthie.springbootin28m.model.Todo;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-
-import org.springframework.stereotype.Service;
-
-import com.rhiodamuthie.springbootin28m.model.Todo;
 
 @Service
 public class TodoService {
@@ -35,7 +34,7 @@ public class TodoService {
         todos.add(new Todo( ++todoCount, name, desc, targetDate, isDone));
     }
 
-    public void deleteTodo(int id) {
+    public void deleteTodo(Long id) {
         Iterator<Todo> iterator = todos.iterator();
         while (iterator.hasNext()) {
             Todo todo = iterator.next();

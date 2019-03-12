@@ -9,7 +9,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -41,6 +40,12 @@ public class TodoController {
     @GetMapping("/add-todo")
     public String showAddTodo(ModelMap modelMap){
         return "todo/add-todo";
+    }
+
+    @GetMapping("/delete-todo")
+    public String deleteTodo(@RequestParam Long id) {
+        todoService.deleteTodo(id);
+        return "redirect:/list-todos";
     }
 
     @PostMapping("/add-todo")
