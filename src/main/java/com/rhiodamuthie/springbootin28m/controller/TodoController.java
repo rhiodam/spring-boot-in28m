@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,23 +26,27 @@ public class TodoController {
         public String showTodos(ModelMap model){
         System.out.println(model);
         String name = (String) model.get("name");
-        model.put("todos", todoService.retrieveTodos("in28Minutes"));
+        model.put("todos", todoService.retrieveTodos(name));
         return "list-todos";
     }
 
     @GetMapping("/list-todos")
-//    @ResponseBody
     public String showAllTodos(ModelMap model){
         System.out.println(model);
         String name = (String) model.get("name");
-        model.put("todos", todoService.retrieveTodos("in28Minutes"));
+        model.put("todos", todoService.retrieveTodos(name));
         return "list-todos";
-//        return "hello";
     }
 
-    @GetMapping("/todo")
-    public List<Todo> getAll(){
-        return todoRepository.findAll();
+    @GetMapping("/add-todo")
+    public String showAddTodo(ModelMap modelMap){
+        return "todo/add-todo";
+    }
+
+    @PostMapping("/add-todo")
+    public String addTodo( ModelMap modelMap , @RequestParam String desc){
+        todoService.addTodo((String) modelMap.get("name"), desc ,new Date(), false);
+        return "redirect:/list-todos";
     }
 
     @GetMapping("/todo/{id}")
@@ -52,5 +57,10 @@ public class TodoController {
             todo = todoOptional.get();
         }
         return todo;
+    }
+
+    @GetMapping("/hellowww")
+    public String hello(){
+        return "hello";
     }
 }
