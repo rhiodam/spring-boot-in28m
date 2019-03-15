@@ -14,7 +14,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@NoArgsConstructor
+//@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 public class Todo{
@@ -34,6 +34,7 @@ public class Todo{
 
     private boolean isDone;
 
-
-
+    public Todo() {
+        super();
+    }
 }

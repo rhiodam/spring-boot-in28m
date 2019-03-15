@@ -6,8 +6,10 @@ import com.rhiodamuthie.springbootin28m.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.Optional;
 
@@ -39,18 +41,21 @@ public class TodoController {
 
     @GetMapping("/add-todo")
     public String showAddTodo(ModelMap modelMap){
+        System.out.println(modelMap);
+        modelMap.addAttribute("todo" , new Todo(0L , (String) modelMap.get("name"), "Some Description" , new Date() , false  ));
         return "todo/add-todo";
     }
+
+    @PostMapping("/add-todo")
+    public String addTodo(ModelMap modelMap, Todo todo, BindingResult result){
+        todoService.addTodo((String) modelMap.get("name"), todo.getDesc() ,new Date(), false);
+        return "redirect:/list-todos";
+    }
+
 
     @GetMapping("/delete-todo")
     public String deleteTodo(@RequestParam Long id) {
         todoService.deleteTodo(id);
-        return "redirect:/list-todos";
-    }
-
-    @PostMapping("/add-todo")
-    public String addTodo( ModelMap modelMap , @RequestParam String desc){
-        todoService.addTodo((String) modelMap.get("name"), desc ,new Date(), false);
         return "redirect:/list-todos";
     }
 

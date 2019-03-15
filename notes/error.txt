@@ -1,0 +1,39 @@
+
+
+
+
+
+
+
+https://stackoverflow.com/questions/46989072/org-apache-jasper-jasperexception-web-inf-views-home-jsp-line-25-column/48364974
+
+Whitelabel Error Page
+This application has no explicit mapping for /error, so you are seeing this as a fallback.
+
+Fri Mar 15 04:23:33 ICT 2019
+There was an unexpected error (type=Internal Server Error, status=500).
+/WEB-INF/jsp/todo/add-todo.jsp (line: [18], column: [4]) Unable to find setter method for attribute: [commandName]
+org.apache.jasper.JasperException: /WEB-INF/jsp/todo/add-todo.jsp (line: [18], column: [4]) Unable to find setter method for attribute: [commandName]
+	at org.apache.jasper.compiler.DefaultErrorHandler.jspError(DefaultErrorHandler.java:42)
+	at org.apache.jasper.compiler.ErrorDispatcher.dispatch(ErrorDispatcher.java:292)
+	at org.apache.jasper.compiler.ErrorDispatcher.jspError(ErrorDispatcher.java:115)
+	at org.apache.jasper.compiler.Generator$GenerateVisitor.evaluateAttribute(Generator.java:3009)
+	at org.apache.jasper.compiler.Generator$GenerateVisitor.generateSetters(Generator.java:3229)
+	at
+
+
+In your HomeController.java, you need to display form view with relevant model as following
+
+@RequestMapping(value="/customer", method=RequestMethod.GET)
+    public ModelAndView showForm(Model model) {
+        model.addAttribute("customer",new Customer());
+}
+and if you are using spring-webmvc 5 or latest version then make sure to replace commandName="customer" with modelAttribute="customer". I hope this will solve your problem.
+
+
+
+
+
+
+
+
